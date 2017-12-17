@@ -1,2 +1,4 @@
 # config
-i3, zsh, vim, tmux
+
+Configuration Backups for i3, zsh, vim, tmux
+

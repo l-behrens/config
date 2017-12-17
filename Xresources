@@ -1,0 +1,63 @@
+!font
+xterm*font: xft:DejaVu Sans Mono:style=Condense:pixelsize=13
+!XTerm*font: xft:Terminus Sans Mono:style=Condenses:pixelsize=13
+!scrollback buffer
+XTerm*saveLines: 2000
+!double click selects a word
+XTerm*charClass: 33:48,35:48,37:48,43:48,45-47:48,64:48,95:48,126:48
+!type is xterm-color not xterm
+XTerm*termName: xterm-color
+!disable bold Text because its ugly
+XTerm*boldMode: false
+xterm*eightBitInput: false
+!need meta keys for tmux bindings. They must be escaped
+XTerm*metaSendsEscape: true
+!# Configuration for Urxvt
+
+! State:           'bg',     'fg',     'bgalt',  'hlbg',   'hlfg'
+rofi.color-normal: #272822,  #f8f8f2,  #75715e,  #a6e22e,  #272822
+rofi.color-urgent: #272822,  #f8f8f2,  #75715e,  #a6e22e,  #272822
+rofi.color-active: #272822,  #f8f8f2,  #75715e,  #a6e22e,  #272822
+
+!                  'background', 'border', 'separator'
+rofi.color-window: #272822,      #75715e,  #002b36
+
+! Colors:
+
+! special
+*.foreground:   #f8f8f2
+*.background:   #272822
+*.cursorColor:  #f8f8f2
+
+! black
+*.color0:       #272822
+*.color8:       #75715e
+
+! red
+*.color1:       #f92672
+*.color9:       #f92672
+
+! green
+*.color2:       #a6e22e
+*.color10:      #a6e22e
+
+! yellow
+*.color3:       #f4bf75
+*.color11:      #f4bf75
+
+! blue
+*.color4:       #66d9ef
+*.color12:      #66d9ef
+
+! magenta
+*.color5:       #ae81ff
+*.color13:      #ae81ff
+
+! cyan
+*.color6:       #a1efe4
+*.color14:      #a1efe4
+
+! white
+*.color7:       #f8f8f2
+*.color15:      #f9f8f5
+

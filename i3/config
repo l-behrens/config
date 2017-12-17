@@ -1,0 +1,297 @@
+exec --no-startup-id echo "$0: DESKTOP_AUTOSTART_ID $DESKTOP_AUTOSTART_ID, registering with org.gnome.SessionManager"
+#exec --no-startup-id exec /home/lars/.config/polybar/launch.py 
+exec --no-startup-id dbus-send --session --print-reply=literal --dest=org.gnome.SessionManager "/org/gnome/SessionManager" org.gnome.SessionManager.RegisterClient "string:i3" "string:$DESKTOP_AUTOSTART_ID"
+exec --no-startup-id xrdb ~/.Xresources
+#################################################################################################
+#
+#-> Colors
+#################################################################################################
+
+set_from_resource $background i3wm.background #272822
+set_from_resource $foreground i3wm.foreground #75715e
+set_from_resource $primary i3wm.color2        #f4bf75
+set_from_resource $secondary i3wm.color4      #f92672
+set_from_resource $border i3wm.color8         #f92672  
+
+set $black1           #272822 
+set $black2           #75715e
+set $red1             #f92672
+set $red2             #f92672
+set $green1           #a6e22e
+set $green2           #a6e22e
+set $yellow1          #f4bf75 
+set $yellow2          #f4bf75
+set $blue1            #66d9ef
+set $blue2            #66d9ef
+set $magenta1         #ae81ff
+set $magenta2         #ae81ff 
+set $cyan2            #a1efe4
+set $white1           #f8f8f2
+set $white2           #f9f8f5
+
+
+#class                      border      backgr.         text        indicator       child_border
+client.focused              $green1     $background    $primary       $background    $primary  
+client.focused_inactive     $foreground   $background    $foreground    $background    $primary  
+client.unfocused            $foreground   $background    $foreground    $background    $primary  
+client.urgent               $border     $background    $foreground    $background      $primary  
+client.placeholder          $border     $background    $foreground    $background      $primary  
+client.background           $background
+
+#################################################################################################
+#-> Window Manipulation
+#################################################################################################
+#
+#for_window [class="^.*"] border pixel plus 7
+
+for_window [class="Franz" window_role="browser-window"] move scratchpad exec /home/lars/develop/python_scripts/relsize Franz 90 100
+for_window [class="Wicd-client.py"] move scratchpad
+for_window [class="Clock"] floating enable border none  
+for_window [class="Blueman-manager"] move scratchpad
+for_window [title="tmux" class="XTerm"] move scratchpad border pixel 1
+for_window [class="Pavucontrol" instance="pavucontrol"] move scratchpad
+for_window [class="Zim" instance="zim" window_type="normal"] move scratchpad
+for_window [instance ="keepassx2" class="Keepassx2" window_type="normal"] move scratchpad
+for_window [class="mpv"] move scratchpad exec /home/lars/develop/python_scripts/relsize mpv 90 100
+
+for_window [class="Keepassx2"] floating enable
+for_window [class="Wine"] floating enable
+for_window [class="Telegram"] floating enable
+for_window [class="Arandr"] floating enable
+for_window [class="Arandr"] resize set 600 x 800
+for_window [class="copyq"] floating enable
+for_window [window_role="bubble"] floating enable
+for_window [window_role="Preferences"] floating enable
+for_window [class="Yad"] floating enable
+for_window [class="Wicd-client.py"] floating enable
+for_window [title="Thunderbird Preferences"] floating enable
+for_window [class="Syncthing GTK"] floating enable
+for_window [class="Jitsi"] floating enable
+for_window [class="Skype"] floating enable
+for_window [class="Steam"] floating enable
+for_window [class="Xsane"] floating enable
+for_window [class="Sflphone-client-gnome"] floating enable
+for_window [class="Ekiga"] floating enable
+for_window [class="Pidgin"] floating enable
+for_window [class="Linphone"] floating enable
+for_window [class="Firefox" instance="Download"] floating enable
+for_window [class="Dropbox"] floating enable
+for_window [class="Pavucontrol"] floating enable
+for_window [class="Blueman-manager"] floating enable
+for_window [class="Google-musicmanager"] floating enable
+for_window [class="Lxappearance"] floating enable
+for_window [instance="TeamViewer.exe" class="Wine"] floating enable
+for_window [class="Kupfer.py"] border none
+
+#-> assign Wondows to Workspaces
+assign [instance="play.spotify.com" class="chromium"] 4: music
+assign [class="Thunderbird"] 1: com
+assign [class="Franz" window_role="browser-window"] 1: com
+assign [instance="sun-awt-X11-XFramePeer" class="jetbrains-idea"] 3: prog
+assign [instance="sun-awt-X11-XDialogPeer" class="jetbrains-idea"] 3: prog
+
+set $out1 LVDS1
+set $out2 VGA1
+set $pmutils "1 = Lock          2 = suspend          3 = shutdown" 
+set $mon_setup "1 = HomeExt        2= HomeSgl        3 = Laptop"
+set $presentation "1 = VGA      2 = DVI"
+set $wallpaper "/home/lars/.i3/Wallpaper/current.png"
+
+set $mod  Mod4
+set $mod2 Mod1
+
+font pango:monospace 8
+
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+floating_maximum_size -1 x -1 
+new_window pixel 1
+
+#border pixel 1
+hide_edge_borders smart
+
+#################################################################################################
+#-> Keybindings
+#################################################################################################
+
+# Rofi launcher
+bindsym $mod+p exec rofi -show window
+bindsym Mod1+p exec rofi -show run 
+
+# kill focused window
+bindsym $mod+Shift+q kill
+
+# change focus
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# move focused window
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+bindsym $mod+Tab workspace back_and_forth
+
+# move workspace to next screen
+bindsym $mod+Shift+Tab move container to output right
+bindsym $mod+$mod2+Tab move container to output right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# split in horizontal orientation
+bindsym $mod+b split h
+
+# split in vertical orientation
+bindsym $mod+v split v
+
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen toggle
+
+# change container layout (stacked, tabbed, toggle split)
+default_orientation auto
+workspace_layout tabbed
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+# focus the parent container
+bindsym $mod+a focus parent
+
+# focus the child container
+bindsym $mod+q focus child
+
+# mark container
+bindsym $mod+mod2+m mark --add "marked"
+
+bindsym $mod+mod2+= [con_mark="marked"] focus
+
+
+workspace "1: com"   output $out2
+workspace "2: web"   output $out2
+workspace "3: prog"  output $out2
+workspace "4: music" output $out2
+workspace "5: misc"  output $out1
+
+# switch to workspace
+bindsym $mod+1 workspace 1: com
+bindsym $mod+2 workspace 2: web
+bindsym $mod+3 workspace 3: prog
+bindsym $mod+4 workspace 4: music
+bindsym $mod+5 workspace 5: misc
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace 1: com
+bindsym $mod+Shift+2 move container to workspace 2: web
+bindsym $mod+Shift+3 move container to workspace 3: prog
+bindsym $mod+Shift+4 move container to workspace 4: music
+bindsym $mod+Shift+5 move container to workspace 5: misc
+
+bindsym $mod+Shift+e exec setxkbmap us
+bindsym $mod+Shift+d exec setxkbmap de
+
+bindsym $mod+F8 exec xbacklight -dec 10
+bindsym $mod+F9 exec xbacklight -inc 10
+
+# reload the configuration file
+bindsym $mod+Shift+c reload
+bindsym $mod+Shift+r restart
+
+# show scratchpads
+bindsym $mod+n [class="mpv"] scratchpad show exec /home/lars/develop/python_scripts/relsize mpv 90 100  
+bindsym $mod+y [instance="keepassx2" class="Keepassx2"] scratchpad show 
+bindsym $mod+u [class="Wicd-client.py"] scratchpad show
+bindsym Mod1+o [class="Blueman-manager"] scratchpad show
+bindsym $mod+o [class="Pavucontrol"] scratchpad show
+bindsym $mod+c [class="Franz"] scratchpad show exec /home/lars/develop/python_scripts/relsize Franz 90 100
+bindsym $mod+i [class="XTerm"] scratchpad show exec /home/lars/develop/python_scripts/relsize XTerm 90 100
+
+# Hide fucused scratchpad
+bindsym $mod+Return [class="__focused__" floating] scratchpad show
+
+# Toggle polybar
+bindsym $mod+m exec python /home/lars/.config/polybar/launch.py -t
+
+#################################################################################################
+#-> popups
+#################################################################################################
+
+mode $mon_setup {
+        bindsym 1 exec ~/.screenlayout/home-schreibtisch.sh; mode "default"
+        bindsym 2 exec ~/.screenlayout/single-screen.sh; mode "default"
+        bindsym 3 exec ~/.screenlayout/laptop.sh; mode "default"
+        bindsym Escape mode "default"
+}
+
+bindcode 68 mode $mon_setup
+
+mode $pmutils {
+        bindsym 1 exec i3lock -c 000000; mode "default"
+        bindsym 2 exec sudo systemctl start systemd-suspend; mode "default"
+        bindsym 3 exec sudo shutdown -h now; mode "default"
+        bindsym Escape mode "default"
+}
+
+bindcode 67 mode $pmutils
+
+# resize window (you can also use the mouse for that)
+mode "resize" {
+        bindsym h resize shrink width 5 px or 5 ppt
+        bindsym j resize grow height 5 px or 5 ppt
+        bindsym k resize shrink height 5 px or 5 ppt
+        bindsym l resize grow width 5 px or 5 ppt
+	
+    	bindsym w move up 20 px 
+    	bindsym a move left 20 px 
+    	bindsym s move down 20 px 
+    	bindsym d move right 20 px 
+
+        # same bindings, but for the arrow keys
+        bindsym Left resize shrink width 20 px or 20 ppt
+        bindsym Down resize grow height 20 px or 20 ppt
+        bindsym Up resize shrink height 20 px or 20 ppt
+        bindsym Right resize grow width 20 px or 20 ppt
+
+        # back to normal: Enter or Escape
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+bindsym $mod+r mode "resize"
+bindsym $mod+Mod1+r exec feh --bg-center $wallpaper
+
+#################################################################################################
+#-> Autostart
+#################################################################################################
+
+exec pavucontrol
+exec thunderbird
+exec bt-manager
+exec wicd-gtk
+exec xterm -e tmux
+exec feh --bg-center $wallpaper
+exec keepassx2
+exec --no-startup-id mate-settings-daemon
+exec --no-startup-id nm-applet
+exec --no-startup-id mate-power-manager
+exec --no-startup-id blueman-applet
+exec --no-startup-id mate-settings-daemon 
+exec --no-startup-id xrdb ~/.Xresources
